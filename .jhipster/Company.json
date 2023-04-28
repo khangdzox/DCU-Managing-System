@@ -1,0 +1,37 @@
+{
+  "applications": ["akathon"],
+  "changelogDate": "20230428192444",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "company",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateCreated",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Company",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "factory",
+      "otherEntityRelationshipName": "companyName",
+      "relationshipName": "factoryName",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

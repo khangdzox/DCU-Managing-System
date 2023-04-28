@@ -1,0 +1,37 @@
+{
+  "applications": ["akathon"],
+  "changelogDate": "20230428192644",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "dcu",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateCreated",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Dcu",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "factory",
+      "otherEntityRelationshipName": "deviceName",
+      "relationshipName": "factoryName",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

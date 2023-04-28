@@ -1,0 +1,26 @@
+{
+  "akathonApp": {
+    "dcu": {
+      "home": {
+        "title": "Dcus",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Dcu",
+        "createOrEditLabel": "Create or edit a Dcu",
+        "notFound": "No Dcus found"
+      },
+      "created": "A new Dcu is created with identifier {{ param }}",
+      "updated": "A Dcu is updated with identifier {{ param }}",
+      "deleted": "A Dcu is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Dcu {{ id }}?"
+      },
+      "detail": {
+        "title": "Dcu"
+      },
+      "id": "Id",
+      "name": "Name",
+      "dateCreated": "Date Created",
+      "factoryName": "Factory Name"
+    }
+  }
+}

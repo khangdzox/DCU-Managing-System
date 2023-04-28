@@ -1,0 +1,44 @@
+application {
+  config {
+    baseName akathon,
+    applicationType monolith,
+    packageName com.myapp.akathon,
+    authenticationType jwt,
+    clientFramework react,
+    prodDatabaseType mysql,
+	devDatabaseType mysql,
+    websocket spring-websocket
+  }
+  entities *
+}
+
+entity Company {
+	id Long required,
+	name String required,
+    dateCreated ZonedDateTime
+}
+
+entity Factory {
+	id Long required,
+	name String required,
+    dateCreated ZonedDateTime
+}
+
+entity Dcu {
+	id Long required,
+	name String required,
+    dateCreated ZonedDateTime
+}
+
+entity Record {
+	id Long required,
+	dcuid Long required,
+    current Float required,
+    voltage Float required,
+    timestamp ZonedDateTime required
+}
+
+relationship OneToMany{
+	Company{factoryName} to Factory{companyName}
+    Factory{deviceName} to Dcu{factoryName}
+}

@@ -1,0 +1,43 @@
+{
+  "applications": ["akathon"],
+  "changelogDate": "20230428192544",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "factory",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateCreated",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Factory",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "dcu",
+      "otherEntityRelationshipName": "factoryName",
+      "relationshipName": "deviceName",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "company",
+      "otherEntityRelationshipName": "factoryName",
+      "relationshipName": "companyName",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}
