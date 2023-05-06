@@ -52,7 +52,7 @@ export const Record = () => {
                   <Translate contentKey="akathonApp.record.id">Id</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="akathonApp.record.dcuid">Dcuid</Translate>
+                  <Translate contentKey="akathonApp.record.dcuId">Dcu Id</Translate>
                 </th>
                 <th>
                   <Translate contentKey="akathonApp.record.current">Current</Translate>
@@ -70,29 +70,29 @@ export const Record = () => {
               {recordList.map((record, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/record/${record.id}`} color="link" size="sm">
-                      {record.id}
+                    <Button tag={Link} to={`/record/${record.key.id}`} color="link" size="sm">
+                      {record.key.id}
                     </Button>
                   </td>
-                  <td>{record.dcuid}</td>
+                  <td>{record.key.dcuId}</td>
                   <td>{record.current}</td>
                   <td>{record.voltage}</td>
-                  <td>{record.timestamp ? <TextFormat type="date" value={record.timestamp} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{record.key.timestamp ? <TextFormat type="date" value={record.key.timestamp} format={APP_DATE_FORMAT} /> : null}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/record/${record.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/record/${record.key.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      <Button tag={Link} to={`/record/${record.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`/record/${record.key.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
-                      <Button tag={Link} to={`/record/${record.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/record/${record.key.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.delete">Delete</Translate>

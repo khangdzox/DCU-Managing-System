@@ -34,7 +34,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://localhost:3306/akathon?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: root
-    password:
+    password: root
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -43,6 +43,19 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
+  data:
+    cassandra:
+      keyspace-name: restdemo
+      username: bXZtgOJKOfaOWWkqUouREUQj
+      password: c-.Ft_aO91fwyB9bFXrbfofnUuXs8n+vNOT,ieqOITwSI4sE7rZFByDtt1+o03JCkRp,cHYkO8b5I4UEQsDx_TiJ4CkvdqY4baZmZSgfzJhQjOFP0yHejShkZfBSQMZt
+      # Create the schema on the fly if it doesn't exist
+      schema-action: CREATE_IF_NOT_EXISTS
+      # Increase timeouts when connecting to Astra from a dev workstation
+      request:
+        timeout: 10s
+      connection:
+        connect-timeout: 10s
+        init-query-timeout: 10s
   jpa:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
@@ -109,3 +122,5 @@ jhipster:
 # ===================================================================
 
 # application:
+datastax.astra:
+  secure-connect-bundle: secure-connect-restdemo.zip

@@ -1,7 +1,11 @@
 package com.myapp.akathon.repository;
 
-import com.myapp.akathon.domain.Record;
-import org.springframework.data.jpa.repository.*;
+import com.myapp.akathon.domain.record.Record;
+import com.myapp.akathon.domain.record.RecordPrimaryKey;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +13,16 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface RecordRepository extends JpaRepository<Record, Long> {}
+public interface RecordRepository extends CassandraRepository<Record, RecordPrimaryKey> {
+    boolean existsByKeyId(UUID id);
+
+    boolean existsByKeyIdAndKeyDcuId(UUID id, Long dcuId);
+
+    Optional<Record> findByKeyId(UUID id);
+
+    List<Record> findByKeyDcuId(Long dcuId);
+
+    Optional<Record> findByKeyIdAndKeyDcuId(UUID id, Long dcuId);
+
+    void deleteByKeyId(UUID id);
+}

@@ -31,13 +31,13 @@ export const RecordDetail = () => {
               <Translate contentKey="akathonApp.record.id">Id</Translate>
             </span>
           </dt>
-          <dd>{recordEntity.id}</dd>
+          <dd>{recordEntity.key.id}</dd>
           <dt>
-            <span id="dcuid">
-              <Translate contentKey="akathonApp.record.dcuid">Dcuid</Translate>
+            <span id="dcuId">
+              <Translate contentKey="akathonApp.record.dcuId">Dcu Id</Translate>
             </span>
           </dt>
-          <dd>{recordEntity.dcuid}</dd>
+          <dd>{recordEntity.key.dcuId}</dd>
           <dt>
             <span id="current">
               <Translate contentKey="akathonApp.record.current">Current</Translate>
@@ -55,7 +55,9 @@ export const RecordDetail = () => {
               <Translate contentKey="akathonApp.record.timestamp">Timestamp</Translate>
             </span>
           </dt>
-          <dd>{recordEntity.timestamp ? <TextFormat value={recordEntity.timestamp} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>
+            {recordEntity.key.timestamp ? <TextFormat value={recordEntity.key.timestamp} type="date" format={APP_DATE_FORMAT} /> : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/record" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
@@ -64,7 +66,7 @@ export const RecordDetail = () => {
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/record/${recordEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/record/${recordEntity.key.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

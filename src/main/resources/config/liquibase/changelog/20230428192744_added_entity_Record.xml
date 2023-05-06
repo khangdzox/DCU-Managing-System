@@ -14,7 +14,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="dcuid" type="bigint">
+            <column name="dcu_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="current" type="${floatType}">
@@ -48,7 +48,7 @@
                   tableName="record"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="dcuid" type="numeric"/>
+            <column name="dcu_id" type="numeric"/>
             <column name="current" type="numeric"/>
             <column name="voltage" type="numeric"/>
             <column name="timestamp" type="date"/>

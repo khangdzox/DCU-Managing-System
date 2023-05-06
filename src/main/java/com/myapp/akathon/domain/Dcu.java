@@ -2,7 +2,7 @@ package com.myapp.akathon.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -19,7 +19,7 @@ public class Dcu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    // @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -30,7 +30,7 @@ public class Dcu implements Serializable {
     private String name;
 
     @Column(name = "date_created")
-    private ZonedDateTime dateCreated;
+    private Instant dateCreated;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "deviceNames", "companyName" }, allowSetters = true)
@@ -64,16 +64,16 @@ public class Dcu implements Serializable {
         this.name = name;
     }
 
-    public ZonedDateTime getDateCreated() {
+    public Instant getDateCreated() {
         return this.dateCreated;
     }
 
-    public Dcu dateCreated(ZonedDateTime dateCreated) {
+    public Dcu dateCreated(Instant dateCreated) {
         this.setDateCreated(dateCreated);
         return this;
     }
 
-    public void setDateCreated(ZonedDateTime dateCreated) {
+    public void setDateCreated(Instant dateCreated) {
         this.dateCreated = dateCreated;
     }
 

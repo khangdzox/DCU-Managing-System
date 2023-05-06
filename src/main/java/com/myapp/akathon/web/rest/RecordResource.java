@@ -1,6 +1,6 @@
 package com.myapp.akathon.web.rest;
 
-import com.myapp.akathon.domain.Record;
+import com.myapp.akathon.domain.record.Record;
 import com.myapp.akathon.repository.RecordRepository;
 import com.myapp.akathon.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.myapp.akathon.domain.Record}.
+ * REST controller for managing {@link com.myapp.akathon.domain.record.Record}.
  */
 @RestController
 @RequestMapping("/api")
@@ -50,13 +51,13 @@ public class RecordResource {
     @PostMapping("/records")
     public ResponseEntity<Record> createRecord(@Valid @RequestBody Record record) throws URISyntaxException {
         log.debug("REST request to save Record : {}", record);
-        if (record.getId() != null) {
+        if (record.getKey().getId() != null) {
             throw new BadRequestAlertException("A new record cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Record result = recordRepository.save(record);
+        Record result = recordRepository.save(record.id(UUID.randomUUID()));
         return ResponseEntity
-            .created(new URI("/api/records/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .created(new URI("/api/records/" + result.getKey().getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getKey().getId().toString()))
             .body(result);
     }
 
@@ -72,25 +73,25 @@ public class RecordResource {
      */
     @PutMapping("/records/{id}")
     public ResponseEntity<Record> updateRecord(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final UUID id,
         @Valid @RequestBody Record record
     ) throws URISyntaxException {
         log.debug("REST request to update Record : {}, {}", id, record);
-        if (record.getId() == null) {
+        if (record.getKey().getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, record.getId())) {
+        if (!Objects.equals(id, record.getKey().getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!recordRepository.existsById(id)) {
+        if (!recordRepository.existsByKeyId(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
         Record result = recordRepository.save(record);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, record.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, record.getKey().getId().toString()))
             .body(result);
     }
 
@@ -107,26 +108,26 @@ public class RecordResource {
      */
     @PatchMapping(value = "/records/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Record> partialUpdateRecord(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final UUID id,
         @NotNull @RequestBody Record record
     ) throws URISyntaxException {
         log.debug("REST request to partial update Record partially : {}, {}", id, record);
-        if (record.getId() == null) {
+        if (record.getKey().getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, record.getId())) {
+        if (!Objects.equals(id, record.getKey().getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!recordRepository.existsById(id)) {
+        if (!recordRepository.existsByKeyId(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
         Optional<Record> result = recordRepository
-            .findById(record.getId())
+            .findByKeyId(record.getKey().getId())
             .map(existingRecord -> {
-                if (record.getDcuid() != null) {
-                    existingRecord.setDcuid(record.getDcuid());
+                if (record.getKey().getDcuId() != null) {
+                    existingRecord.getKey().setDcuId(record.getKey().getDcuId());
                 }
                 if (record.getCurrent() != null) {
                     existingRecord.setCurrent(record.getCurrent());
@@ -134,8 +135,8 @@ public class RecordResource {
                 if (record.getVoltage() != null) {
                     existingRecord.setVoltage(record.getVoltage());
                 }
-                if (record.getTimestamp() != null) {
-                    existingRecord.setTimestamp(record.getTimestamp());
+                if (record.getKey().getTimestamp() != null) {
+                    existingRecord.getKey().setTimestamp(record.getKey().getTimestamp());
                 }
 
                 return existingRecord;
@@ -144,7 +145,7 @@ public class RecordResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, record.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, record.getKey().getId().toString())
         );
     }
 
@@ -166,9 +167,9 @@ public class RecordResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the record, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/records/{id}")
-    public ResponseEntity<Record> getRecord(@PathVariable Long id) {
+    public ResponseEntity<Record> getRecord(@PathVariable UUID id) {
         log.debug("REST request to get Record : {}", id);
-        Optional<Record> record = recordRepository.findById(id);
+        Optional<Record> record = recordRepository.findByKeyId(id);
         return ResponseUtil.wrapOrNotFound(record);
     }
 
@@ -179,9 +180,9 @@ public class RecordResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/records/{id}")
-    public ResponseEntity<Void> deleteRecord(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteRecord(@PathVariable UUID id) {
         log.debug("REST request to delete Record : {}", id);
-        recordRepository.deleteById(id);
+        recordRepository.deleteByKeyId(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

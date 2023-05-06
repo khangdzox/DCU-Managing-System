@@ -11,7 +11,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "dcuid",
+      "fieldName": "dcuId",
       "fieldType": "Long",
       "fieldValidateRules": ["required"]
     },
@@ -27,7 +27,7 @@
     },
     {
       "fieldName": "timestamp",
-      "fieldType": "ZonedDateTime",
+      "fieldType": "Instant",
       "fieldValidateRules": ["required"]
     }
   ],

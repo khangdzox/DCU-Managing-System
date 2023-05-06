@@ -64,7 +64,7 @@ export const RecordUpdate = () => {
         }
       : {
           ...recordEntity,
-          timestamp: convertDateTimeFromServer(recordEntity.timestamp),
+          timestamp: convertDateTimeFromServer(recordEntity.key.timestamp),
         };
 
   return (
@@ -93,10 +93,10 @@ export const RecordUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('akathonApp.record.dcuid')}
-                id="record-dcuid"
-                name="dcuid"
-                data-cy="dcuid"
+                label={translate('akathonApp.record.dcuId')}
+                id="record-dcuId"
+                name="dcuId"
+                data-cy="dcuId"
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },

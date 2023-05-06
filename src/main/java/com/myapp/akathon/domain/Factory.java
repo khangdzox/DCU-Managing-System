@@ -2,7 +2,7 @@ package com.myapp.akathon.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -21,7 +21,7 @@ public class Factory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    // @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -32,7 +32,7 @@ public class Factory implements Serializable {
     private String name;
 
     @Column(name = "date_created")
-    private ZonedDateTime dateCreated;
+    private Instant dateCreated;
 
     @OneToMany(mappedBy = "factoryName")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -71,16 +71,16 @@ public class Factory implements Serializable {
         this.name = name;
     }
 
-    public ZonedDateTime getDateCreated() {
+    public Instant getDateCreated() {
         return this.dateCreated;
     }
 
-    public Factory dateCreated(ZonedDateTime dateCreated) {
+    public Factory dateCreated(Instant dateCreated) {
         this.setDateCreated(dateCreated);
         return this;
     }
 
-    public void setDateCreated(ZonedDateTime dateCreated) {
+    public void setDateCreated(Instant dateCreated) {
         this.dateCreated = dateCreated;
     }
 

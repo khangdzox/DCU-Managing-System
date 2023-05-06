@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 export interface IRecord {
   id?: number;
-  dcuid?: number;
+  dcuId?: number;
   current?: number;
   voltage?: number;
   timestamp?: string;

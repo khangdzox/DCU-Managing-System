@@ -1,4 +1,4 @@
-id;dcuid;current;voltage;timestamp
+id;dcu_id;current;voltage;timestamp
 1;94592;34047;16329;2023-04-28T16:40:23
 2;30424;57946;63512;2023-04-28T06:04:58
 3;609;57569;40562;2023-04-28T04:53:52

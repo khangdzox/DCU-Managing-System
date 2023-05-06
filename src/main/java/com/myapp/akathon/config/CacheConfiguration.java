@@ -53,7 +53,7 @@ public class CacheConfiguration {
             createCache(cm, com.myapp.akathon.domain.Factory.class.getName());
             createCache(cm, com.myapp.akathon.domain.Factory.class.getName() + ".deviceNames");
             createCache(cm, com.myapp.akathon.domain.Dcu.class.getName());
-            createCache(cm, com.myapp.akathon.domain.Record.class.getName());
+            createCache(cm, com.myapp.akathon.domain.record.Record.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

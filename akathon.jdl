@@ -15,27 +15,27 @@ application {
 entity Company {
 	id Long required,
 	name String required,
-    dateCreated ZonedDateTime
+    dateCreated Instant
 }
 
 entity Factory {
 	id Long required,
 	name String required,
-    dateCreated ZonedDateTime
+    dateCreated Instant
 }
 
 entity Dcu {
 	id Long required,
 	name String required,
-    dateCreated ZonedDateTime
+    dateCreated Instant
 }
 
 entity Record {
 	id Long required,
-	dcuid Long required,
+	dcuId Long required,
     current Float required,
     voltage Float required,
-    timestamp ZonedDateTime required
+    timestamp Instant required
 }
 
 relationship OneToMany{

@@ -90,6 +90,10 @@
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
 
         <!-- jhipster-needle-maven-property -->
+
+        <!-- Cassandra driver -->
+        <cassandra-java-driver.version>4.8.0</cassandra-java-driver.version>
+        <cassandra-native-protocol.version>1.4.11</cassandra-native-protocol.version>
     </properties>
 
     <dependencyManagement>
@@ -303,6 +307,31 @@
             <artifactId>spring-security-messaging</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+
+        <!-- Spring Boot + Spring Data Cassandra -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-cassandra</artifactId>
+        </dependency>
+
+        <!-- Cassandra driver -->
+        <dependency>
+            <groupId>com.datastax.oss</groupId>
+            <artifactId>java-driver-core</artifactId>
+            <version>${cassandra-java-driver.version}</version>
+            <!-- exclude Tinkerpop dependencies to remove groovy warning on Java 11 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tinkerpop</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.datastax.oss</groupId>
+            <artifactId>native-protocol</artifactId>
+            <version>${cassandra-native-protocol.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

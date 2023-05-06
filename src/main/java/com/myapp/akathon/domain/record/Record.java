@@ -1,71 +1,64 @@
-package com.myapp.akathon.domain;
+package com.myapp.akathon.domain.record;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
-import javax.persistence.*;
+import java.time.Instant;
+import java.util.UUID;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.cassandra.core.mapping.*;
 
 /**
  * A Record.
  */
-@Entity
-@Table(name = "record")
+@Table(value = "record")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Record implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @PrimaryKey
+    private RecordPrimaryKey key;
 
     @NotNull
-    @Column(name = "dcuid", nullable = false)
-    private Long dcuid;
-
-    @NotNull
-    @Column(name = "current", nullable = false)
+    @Column("current")
+    @CassandraType(type = CassandraType.Name.DECIMAL)
     private Float current;
 
     @NotNull
-    @Column(name = "voltage", nullable = false)
+    @Column("voltage")
+    @CassandraType(type = CassandraType.Name.DECIMAL)
     private Float voltage;
-
-    @NotNull
-    @Column(name = "timestamp", nullable = false)
-    private ZonedDateTime timestamp;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
-        return this.id;
+    public RecordPrimaryKey getKey() {
+        return key;
     }
 
-    public Record id(Long id) {
-        this.setId(id);
+    public Record key(RecordPrimaryKey key) {
+        this.setKey(key);
         return this;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setKey(RecordPrimaryKey key) {
+        this.key = key;
     }
 
-    public Long getDcuid() {
-        return this.dcuid;
-    }
-
-    public Record dcuid(Long dcuid) {
-        this.setDcuid(dcuid);
+    public Record id(UUID id) {
+        this.getKey().setId(id);
         return this;
     }
 
-    public void setDcuid(Long dcuid) {
-        this.dcuid = dcuid;
+    public Record dcuId(Long dcuId) {
+        this.getKey().setDcuId(dcuId);
+        return this;
+    }
+
+    public Record timestamp(Instant timestamp) {
+        this.getKey().setTimestamp(timestamp);
+        return this;
     }
 
     public Float getCurrent() {
@@ -94,19 +87,6 @@ public class Record implements Serializable {
         this.voltage = voltage;
     }
 
-    public ZonedDateTime getTimestamp() {
-        return this.timestamp;
-    }
-
-    public Record timestamp(ZonedDateTime timestamp) {
-        this.setTimestamp(timestamp);
-        return this;
-    }
-
-    public void setTimestamp(ZonedDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -117,7 +97,7 @@ public class Record implements Serializable {
         if (!(o instanceof Record)) {
             return false;
         }
-        return id != null && id.equals(((Record) o).id);
+        return key != null && key.equals(((Record) o).key);
     }
 
     @Override
@@ -130,11 +110,9 @@ public class Record implements Serializable {
     @Override
     public String toString() {
         return "Record{" +
-            "id=" + getId() +
-            ", dcuid=" + getDcuid() +
+            "primaryKey=" + getKey() +
             ", current=" + getCurrent() +
             ", voltage=" + getVoltage() +
-            ", timestamp='" + getTimestamp() + "'" +
             "}";
     }
 }
