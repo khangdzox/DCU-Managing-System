@@ -6,10 +6,12 @@ import { toast } from 'react-toastify';
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { handleRegister, reset } from './register.reducer';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(
     () => () => {
@@ -17,6 +19,12 @@ export const RegisterPage = () => {
     },
     []
   );
+
+  const isAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
+
+  if (isAuthenticated) {
+    navigate('/');
+  }
 
   const currentLocale = useAppSelector(state => state.locale.currentLocale);
 
@@ -107,19 +115,11 @@ export const RegisterPage = () => {
           </ValidatedForm>
           <p>&nbsp;</p>
           <Alert color="warning">
-            <span>
-              <Translate contentKey="global.messages.info.authenticated.prefix">If you want to </Translate>
-            </span>
-            <a className="alert-link">
-              <Translate contentKey="global.messages.info.authenticated.link"> sign in</Translate>
-            </a>
-            <span>
-              <Translate contentKey="global.messages.info.authenticated.suffix">
-                , you can try the default accounts:
-                <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-                <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
-              </Translate>
-            </span>
+            <span>Already had an account?&nbsp;</span>
+            <Link to="/login" className="alert-link">
+              Sign in
+            </Link>
+            <span>&nbsp;now!</span>
           </Alert>
         </Col>
       </Row>

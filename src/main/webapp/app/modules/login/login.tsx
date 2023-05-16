@@ -18,6 +18,10 @@ export const Login = () => {
     setShowModal(true);
   }, []);
 
+  if (isAuthenticated) {
+    navigate('/');
+  }
+
   const handleLogin = (username, password, rememberMe = false) => dispatch(login(username, password, rememberMe));
 
   const handleClose = () => {
