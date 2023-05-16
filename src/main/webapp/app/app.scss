@@ -29,6 +29,8 @@ a {
     overflow-y: auto;
     overflow-x: hidden;
     padding: 1rem;
+    min-height: calc(100vh - 112px);
+    position: relative;
     .card {
       padding: 1rem;
     }

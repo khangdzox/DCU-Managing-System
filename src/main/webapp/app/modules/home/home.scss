@@ -8,3 +8,37 @@ Main page styles
   background: url('../../../content/images/jhipster_family_member_2.svg') no-repeat center top;
   background-size: contain;
 }
+
+.view-container:has(.home) {
+  background: url('../../../content/images/blue_white_technology_background.jpg') no-repeat center top;
+  background-size: cover;
+}
+
+.home {
+  width: 70%;
+  height: calc(100% - 32px) !important;
+  padding: 2rem;
+  position: absolute;
+  > div {
+    height: 100%;
+    h2 {
+      font-size: 3rem;
+      .user-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        background-color: #39738899;
+        border: 1px solid #397388;
+        border-radius: 12px;
+      }
+    }
+    p {
+      text-align: justify;
+      margin: 2rem 0;
+    }
+    .button,
+    .button:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}

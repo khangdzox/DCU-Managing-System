@@ -6,12 +6,8 @@ import { Col, Row } from 'reactstrap';
 
 const Footer = () => (
   <div className="footer page-content">
-    <Row>
-      <Col md="12">
-        <p>
-          <Translate contentKey="footer">Your footer</Translate>
-        </p>
-      </Col>
+    <Row className="text-center align-items-center m-0">
+      <Col md="12">&copy; 2023 Swinburne Vietnam Alliance Program. All rights reserved.</Col>
     </Row>
   </div>
 );

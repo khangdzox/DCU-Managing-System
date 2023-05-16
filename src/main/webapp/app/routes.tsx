@@ -41,8 +41,7 @@ const AppRoutes = () => {
           path="login"
           element={
             <>
-              {' '}
-              <Login /> <Home />{' '}
+              <Login /> <Home />
             </>
           }
         />
