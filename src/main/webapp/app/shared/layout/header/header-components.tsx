@@ -13,9 +13,10 @@ export const BrandIcon = props => (
 
 export const Brand = () => (
   <NavbarBrand tag={Link} to="/" className="brand-logo">
-    <BrandIcon />
+    {/* <BrandIcon /> */}
     <span className="brand-title">
-      <Translate contentKey="global.title">Akathon</Translate>
+      {/* <Translate contentKey="global.title">DCU Managing System</Translate> */}
+      DMS
     </span>
     <span className="navbar-version">{VERSION}</span>
   </NavbarBrand>
@@ -28,6 +29,24 @@ export const Home = () => (
       <span>
         <Translate contentKey="global.menu.home">Home</Translate>
       </span>
+    </NavLink>
+  </NavItem>
+);
+
+export const LoginButton = () => (
+  <NavItem>
+    <NavLink tag={Link} to="/login" className="d-flex align-items-center">
+      <FontAwesomeIcon icon="sign-in-alt" />
+      <span>Log in</span>
+    </NavLink>
+  </NavItem>
+);
+
+export const RegisterButton = () => (
+  <NavItem>
+    <NavLink tag={Link} to="/account/register" className="d-flex align-items-center">
+      <FontAwesomeIcon icon="user-plus" />
+      <span>Register</span>
     </NavLink>
   </NavItem>
 );

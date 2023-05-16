@@ -37,7 +37,15 @@ const AppRoutes = () => {
     <div className="view-routes">
       <ErrorBoundaryRoutes>
         <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
+        <Route
+          path="login"
+          element={
+            <>
+              {' '}
+              <Login /> <Home />{' '}
+            </>
+          }
+        />
         <Route path="logout" element={<Logout />} />
         <Route path="account">
           <Route
