@@ -278,4 +278,16 @@ public class DcuResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     * {@code GET  /companies/:fid/factories} : get all dcu in "fid" factory.
+     *
+     * @param fid the factory id.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the dcu list, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/factories/{fid}/dcus")
+    public List<Dcu> getDcusInFactory(@PathVariable Long fid) {
+        log.debug("REST request to get Dcus in Factory : {}", fid);
+        return dcuRepository.findByFactoryNameId(fid);
+    }
 }
