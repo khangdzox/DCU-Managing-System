@@ -20,6 +20,9 @@ import ManagerCompanyUpdate from 'app/modules/manager/manager-company-update';
 import ManagerFactoryUpdate from './modules/manager/manager-factory-update';
 import ManagerFactoryDelete from './modules/manager/manager-factory-delete';
 import ManagerFactoryDetail from './modules/manager/manager-factory';
+import ManagerDcuDetail from './modules/manager/manager-dcu';
+import { ManagerDcuUpdate } from './modules/manager/manager-dcu-update';
+import ManagerDcuDelete from './modules/manager/manager-dcu-delete';
 
 const loading = <div>loading ...</div>;
 
@@ -46,15 +49,8 @@ const AppRoutes = () => {
           <Route index element={<Manager />} />
           <Route path="update" element={<ManagerCompanyUpdate />} />
           <Route path="new" element={<ManagerFactoryUpdate />} />
-          <Route path=":id">
-            <Route
-              index
-              element={
-                <>
-                  <ManagerFactoryDetail />
-                </>
-              }
-            />
+          <Route path=":fid">
+            <Route index element={<ManagerFactoryDetail />} />
             <Route path="update" element={<ManagerFactoryUpdate />} />
             <Route
               path="delete"
@@ -65,6 +61,20 @@ const AppRoutes = () => {
                 </>
               }
             />
+            <Route path="new" element={<ManagerDcuUpdate />} />
+            <Route path=":did">
+              <Route index element={<ManagerDcuDetail />} />
+              <Route path="update" element={<ManagerDcuUpdate />} />
+              <Route
+                path="delete"
+                element={
+                  <>
+                    {' '}
+                    <ManagerDcuDetail /> <ManagerDcuDelete />{' '}
+                  </>
+                }
+              />
+            </Route>
           </Route>
         </Route>
         <Route

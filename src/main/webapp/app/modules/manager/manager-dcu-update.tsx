@@ -8,24 +8,25 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ICompany } from 'app/shared/model/company.model';
-import { getEntities as getCompanies } from 'app/entities/company/company.reducer';
 import { IFactory } from 'app/shared/model/factory.model';
-import { getEntity, updateEntity, createEntity, reset } from 'app/entities/factory/factory.reducer';
+import { getEntities as getFactories } from 'app/entities/factory/factory.reducer';
+import { IDcu } from 'app/shared/model/dcu.model';
+import { getEntity, updateEntity, createEntity, reset } from 'app/entities/dcu/dcu.reducer';
 
-export const ManagerFactoryUpdate = () => {
+export const ManagerDcuUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const { fid: id } = useParams<'fid'>();
+  const { did: id } = useParams<'did'>();
+  const { fid: factoryId } = useParams<'fid'>();
   const isNew = id === undefined;
 
-  const companyEntity = useAppSelector(state => state.company.entity);
   const factoryEntity = useAppSelector(state => state.factory.entity);
-  const loading = useAppSelector(state => state.factory.loading);
-  const updating = useAppSelector(state => state.factory.updating);
-  const updateSuccess = useAppSelector(state => state.factory.updateSuccess);
+  const dcuEntity = useAppSelector(state => state.dcu.entity);
+  const loading = useAppSelector(state => state.dcu.loading);
+  const updating = useAppSelector(state => state.dcu.updating);
+  const updateSuccess = useAppSelector(state => state.dcu.updateSuccess);
 
   const handleClose = () => {
     navigate(-1);
@@ -49,9 +50,9 @@ export const ManagerFactoryUpdate = () => {
     values.dateCreated = convertDateTimeToServer(values.dateCreated);
 
     const entity = {
-      ...factoryEntity,
+      ...dcuEntity,
       ...values,
-      companyName: companyEntity,
+      factoryName: factoryEntity,
     };
 
     if (isNew) {
@@ -67,16 +68,16 @@ export const ManagerFactoryUpdate = () => {
           dateCreated: displayDefaultDateTime(),
         }
       : {
-          ...factoryEntity,
-          dateCreated: convertDateTimeFromServer(factoryEntity.dateCreated),
+          ...dcuEntity,
+          dateCreated: convertDateTimeFromServer(dcuEntity.dateCreated),
         };
 
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="akathonApp.factory.home.createOrEditLabel" data-cy="FactoryCreateUpdateHeading">
-            {isNew ? 'Create a new Factory' : 'Edit a Factory'}
+          <h2 id="akathonApp.dcu.home.createOrEditLabel" data-cy="DcuCreateUpdateHeading">
+            {isNew ? 'Create a new DCU' : 'Edit a DCU'}
           </h2>
         </Col>
       </Row>
@@ -87,8 +88,8 @@ export const ManagerFactoryUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               <ValidatedField
-                label={translate('akathonApp.factory.name')}
-                id="factory-name"
+                label={translate('akathonApp.dcu.name')}
+                id="dcu-name"
                 name="name"
                 data-cy="name"
                 type="text"
@@ -97,31 +98,31 @@ export const ManagerFactoryUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('akathonApp.factory.dateCreated')}
-                id="factory-dateCreated"
+                label={translate('akathonApp.dcu.dateCreated')}
+                id="dcu-dateCreated"
                 name="dateCreated"
                 data-cy="dateCreated"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
-              <input type="hidden" name="companyName" value={companyEntity.id} />
+              <input type="hidden" name="factoryName" value={factoryEntity.id} />
               {/* <ValidatedField
-                id="factory-companyName"
-                name="companyName"
-                data-cy="companyName"
-                label={translate('akathonApp.factory.companyName')}
+                id="dcu-factoryName"
+                name="factoryName"
+                data-cy="factoryName"
+                label={translate('akathonApp.dcu.factoryName')}
                 type="select"
               >
                 <option value="" key="0" />
-                {companies
-                  ? companies.map(otherEntity => (
+                {factories
+                  ? factories.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>
                     ))
                   : null}
               </ValidatedField> */}
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to={`/manager`} replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to={`/manager/${factoryId}`} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
@@ -142,4 +143,4 @@ export const ManagerFactoryUpdate = () => {
   );
 };
 
-export default ManagerFactoryUpdate;
+export default ManagerDcuUpdate;

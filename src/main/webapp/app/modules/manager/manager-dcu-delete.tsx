@@ -5,14 +5,15 @@ import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from 'app/entities/factory/factory.reducer';
+import { getEntity, deleteEntity } from 'app/entities/dcu/dcu.reducer';
 
-export const ManagerFactoryDelete = () => {
+export const ManagerDcuDelete = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { fid: id } = useParams<'fid'>();
+  const { fid } = useParams<'fid'>();
+  const { did: id } = useParams<'did'>();
 
   const [loadModal, setLoadModal] = useState(false);
 
@@ -21,8 +22,8 @@ export const ManagerFactoryDelete = () => {
     setLoadModal(true);
   }, []);
 
-  const factoryEntity = useAppSelector(state => state.factory.entity);
-  const updateSuccess = useAppSelector(state => state.factory.updateSuccess);
+  const dcuEntity = useAppSelector(state => state.dcu.entity);
+  const updateSuccess = useAppSelector(state => state.dcu.updateSuccess);
 
   const handleClose = () => {
     navigate(-1);
@@ -36,17 +37,17 @@ export const ManagerFactoryDelete = () => {
   }, [updateSuccess]);
 
   const confirmDelete = () => {
-    dispatch(deleteEntity(factoryEntity.id));
+    dispatch(deleteEntity(dcuEntity.id));
   };
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="factoryDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="dcuDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="akathonApp.factory.delete.question">
-        <Translate contentKey="akathonApp.factory.delete.question" interpolate={{ id: factoryEntity.id }}>
-          Are you sure you want to delete this Factory?
+      <ModalBody id="akathonApp.dcu.delete.question">
+        <Translate contentKey="akathonApp.dcu.delete.question" interpolate={{ id: dcuEntity.id }}>
+          Are you sure you want to delete this Dcu?
         </Translate>
       </ModalBody>
       <ModalFooter>
@@ -55,7 +56,7 @@ export const ManagerFactoryDelete = () => {
           &nbsp;
           <Translate contentKey="entity.action.cancel">Cancel</Translate>
         </Button>
-        <Button id="jhi-confirm-delete-factory" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="jhi-confirm-delete-dcu" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp;
           <Translate contentKey="entity.action.delete">Delete</Translate>
@@ -65,4 +66,4 @@ export const ManagerFactoryDelete = () => {
   );
 };
 
-export default ManagerFactoryDelete;
+export default ManagerDcuDelete;

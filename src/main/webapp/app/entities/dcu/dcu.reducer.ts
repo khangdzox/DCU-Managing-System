@@ -23,6 +23,11 @@ export const getEntities = createAsyncThunk('dcu/fetch_entity_list', async ({ pa
   return axios.get<IDcu[]>(requestUrl);
 });
 
+export const getEntitiesInParent = createAsyncThunk('factory/fetch_entity_list_in_parent', async (id: string | number) => {
+  const requestUrl = `api/factories/${id}/dcus`;
+  return axios.get<IDcu[]>(requestUrl);
+});
+
 export const getEntity = createAsyncThunk(
   'dcu/fetch_entity',
   async (id: string | number) => {
@@ -89,7 +94,7 @@ export const DcuSlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = {};
       })
-      .addMatcher(isFulfilled(getEntities), (state, action) => {
+      .addMatcher(isFulfilled(getEntities, getEntitiesInParent), (state, action) => {
         const { data } = action.payload;
 
         return {
