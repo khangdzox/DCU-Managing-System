@@ -12,7 +12,7 @@ export const ManagerFactoryDelete = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams<'id'>();
+  const { fid: id } = useParams<'fid'>();
 
   const [loadModal, setLoadModal] = useState(false);
 

@@ -18,7 +18,7 @@ export const ManagerFactoryUpdate = () => {
 
   const navigate = useNavigate();
 
-  const { id } = useParams<'id'>();
+  const { fid: id } = useParams<'fid'>();
   const isNew = id === undefined;
 
   const companyEntity = useAppSelector(state => state.company.entity);
@@ -121,7 +121,14 @@ export const ManagerFactoryUpdate = () => {
                     ))
                   : null}
               </ValidatedField> */}
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/manager" replace color="info">
+              <Button
+                tag={Link}
+                id="cancel-save"
+                data-cy="entityCreateCancelButton"
+                to={`/manager/${factoryEntity.id}`}
+                replace
+                color="info"
+              >
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
