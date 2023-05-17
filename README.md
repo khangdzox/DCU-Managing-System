@@ -1,4 +1,108 @@
-# akathon
+# DCU Managing System
+
+This is a web-based platform that allows you to manage DCUs with ease. You can monitor the status and performance, configure settings, and troubleshoot issues remotely.
+
+Demo video: [https://youtu.be/wetLU_wL30o](https://youtu.be/wetLU_wL30o)
+
+## About Us
+
+We are the Swinnet Team from Swinburne Vietnam Alliance Program, Da Nang Campus, and this project is for the Akathon Competition.
+
+Our team includes four members:
+
+- Khang VO (me, Leader)
+- Chanh Hoai Nam NGUYEN
+- Xuan Sinh DINH
+- Quang Thien LE
+
+We are all first year Computer Science students at Swinburne Vietnam at the time the project was done.
+
+## Technology
+
+For the back-end, we used Java Spring Boot to create REST APIs and WebSocket.
+
+For the front-end, we used React.js with Redux.
+
+For the databases, we used MySQL at localhost to store relational data, and DataStax AstraDB for the frequently updated DCUs' status.
+
+## Features
+
+Manage and configure your company, factories, and DCUs.
+
+Add, edit, view, and delete factories and DCUs.
+
+Monitor real-time status of your DCUs.
+
+View DCUs status history.
+
+## Installation
+
+1. Configuring databases
+
+- We used localhost MySQL database, so make sure that you have a MySQL server on your localhost.
+- You can either configure datasource properties to use your own database's name, username and password, or you can set your localhost MySQL username and password to `root` to use our configuration.
+- Run the following SQL commands to set up your database.
+
+```sql
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+CREATE DATABASE IF NOT EXISTS `akathon` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `akathon`;
+
+CREATE TABLE `company` (
+  `id` bigint(20) NOT NULL,
+  `name` text NOT NULL,
+  `date_created` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `dcu` (
+  `id` bigint(20) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `factory_name_id` bigint(20) NOT NULL,
+  `name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `factory` (
+  `id` bigint(20) NOT NULL,
+  `name` text NOT NULL,
+  `date_created` datetime NOT NULL,
+  `company_name_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `dcu`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `factory`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `company`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `dcu`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `factory`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+COMMIT;
+```
+
+2. Cloning this directory
+
+3. Go to the repository in Terminal and run `./mvnw` (or `mvnw` for Command Prompt) to run the server on your localhost
+
+## Default account
+
+Our website provides two default accounts:
+
+- {Username: `user`, Password: `user`}: have access to dashboard and account settings.
+- {Username: `admin`, Password: `admin`}: have additional access to Entities pages and Administration tools (tracker, monitor, configuration, Swagger UI, etc.)
+
+# Generated content
 
 This application was generated using JHipster 7.9.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.3](https://www.jhipster.tech/documentation-archive/v7.9.3).
 
