@@ -181,4 +181,16 @@ public class FactoryResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     * {@code GET  /companies/:cid/factories} : get all factories in "cid" company.
+     *
+     * @param cid the company id.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the factory, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/companies/{cid}/factories")
+    public List<Factory> getFactoriesInCompany(@PathVariable Long cid) {
+        log.debug("REST request to get Factories in Company : {}", cid);
+        return factoryRepository.findByCompanyNameId(cid);
+    }
 }
