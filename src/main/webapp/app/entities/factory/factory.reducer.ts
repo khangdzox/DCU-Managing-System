@@ -23,6 +23,11 @@ export const getEntities = createAsyncThunk('factory/fetch_entity_list', async (
   return axios.get<IFactory[]>(requestUrl);
 });
 
+export const getEntitiesInParent = createAsyncThunk('factory/fetch_entity_list_in_parent', async (id: string | number) => {
+  const requestUrl = `api/companies/${id}/factories`;
+  return axios.get<IFactory[]>(requestUrl);
+});
+
 export const getEntity = createAsyncThunk(
   'factory/fetch_entity',
   async (id: string | number) => {
@@ -89,7 +94,7 @@ export const FactorySlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = {};
       })
-      .addMatcher(isFulfilled(getEntities), (state, action) => {
+      .addMatcher(isFulfilled(getEntities, getEntitiesInParent), (state, action) => {
         const { data } = action.payload;
 
         return {

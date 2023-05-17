@@ -15,6 +15,11 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
+import Manager from 'app/modules/manager/manager';
+import ManagerCompanyUpdate from 'app/modules/manager/manager-company-update';
+import ManagerFactoryUpdate from './modules/manager/manager-factory-update';
+import ManagerFactoryDelete from './modules/manager/manager-factory-delete';
+import ManagerFactoryDetail from './modules/manager/manager-factory';
 
 const loading = <div>loading ...</div>;
 
@@ -37,11 +42,37 @@ const AppRoutes = () => {
     <div className="view-routes">
       <ErrorBoundaryRoutes>
         <Route index element={<Home />} />
+        <Route path="manager">
+          <Route index element={<Manager />} />
+          <Route path="update" element={<ManagerCompanyUpdate />} />
+          <Route path="new" element={<ManagerFactoryUpdate />} />
+          <Route path=":id">
+            <Route
+              index
+              element={
+                <>
+                  <ManagerFactoryDetail />
+                </>
+              }
+            />
+            <Route path="update" element={<ManagerFactoryUpdate />} />
+            <Route
+              path="delete"
+              element={
+                <>
+                  <ManagerFactoryDetail />
+                  <ManagerFactoryDelete />
+                </>
+              }
+            />
+          </Route>
+        </Route>
         <Route
           path="login"
           element={
             <>
-              <Login /> <Home />
+              <Login />
+              <Home />
             </>
           }
         />

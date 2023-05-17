@@ -146,7 +146,12 @@ export const AuthenticationSlice = createSlice({
           isAuthenticated,
           loading: false,
           sessionHasBeenFetched: true,
-          account: action.payload.data,
+          // account: action.payload.data,
+          /**
+           * @todo Backend is not ready atm, hence companyId is hardcoded.
+           * @todo Once backend is ready, remove hardcoded companyId.
+           */
+          account: { ...action.payload.data, companyId: 1 },
         };
       })
       .addCase(authenticate.pending, state => {
