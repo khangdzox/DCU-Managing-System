@@ -15,14 +15,7 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
-import Manager from 'app/modules/manager/manager';
-import ManagerCompanyUpdate from 'app/modules/manager/manager-company-update';
-import ManagerFactoryUpdate from './modules/manager/manager-factory-update';
-import ManagerFactoryDelete from './modules/manager/manager-factory-delete';
-import ManagerFactoryDetail from './modules/manager/manager-factory';
-import ManagerDcuDetail from './modules/manager/manager-dcu';
-import { ManagerDcuUpdate } from './modules/manager/manager-dcu-update';
-import ManagerDcuDelete from './modules/manager/manager-dcu-delete';
+import ManagerRoutes from 'app/modules/manager';
 
 const loading = <div>loading ...</div>;
 
@@ -45,38 +38,14 @@ const AppRoutes = () => {
     <div className="view-routes">
       <ErrorBoundaryRoutes>
         <Route index element={<Home />} />
-        <Route path="manager">
-          <Route index element={<Manager />} />
-          <Route path="update" element={<ManagerCompanyUpdate />} />
-          <Route path="new" element={<ManagerFactoryUpdate />} />
-          <Route path=":fid">
-            <Route index element={<ManagerFactoryDetail />} />
-            <Route path="update" element={<ManagerFactoryUpdate />} />
-            <Route
-              path="delete"
-              element={
-                <>
-                  <ManagerFactoryDetail />
-                  <ManagerFactoryDelete />
-                </>
-              }
-            />
-            <Route path="new" element={<ManagerDcuUpdate />} />
-            <Route path=":did">
-              <Route index element={<ManagerDcuDetail />} />
-              <Route path="update" element={<ManagerDcuUpdate />} />
-              <Route
-                path="delete"
-                element={
-                  <>
-                    {' '}
-                    <ManagerDcuDetail /> <ManagerDcuDelete />{' '}
-                  </>
-                }
-              />
-            </Route>
-          </Route>
-        </Route>
+        <Route
+          path="manager/*"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.USER]}>
+              <ManagerRoutes />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="login"
           element={
