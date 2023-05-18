@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -219,14 +221,19 @@ public class DcuResource {
      * or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/dcus/{dcuId}/records")
-    public List<Record> getRecordsInDcu(@PathVariable Long dcuId) throws URISyntaxException {
+    public List<Record> getRecordsInDcu(@PathVariable Long dcuId, @RequestParam("limit") Optional<Integer> limit)
+        throws URISyntaxException {
         log.debug("REST request to get all Record associated to Dcu : {}", dcuId);
 
         if (!dcuRepository.existsById(dcuId)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "dcuidnotfound");
         }
 
-        return recordRepository.findByKeyDcuId(dcuId);
+        if (limit.isPresent()) {
+            return recordRepository.findByKeyDcuId(dcuId, PageRequest.of(0, limit.get())).toList();
+        } else {
+            return recordRepository.findByKeyDcuId(dcuId);
+        }
     }
 
     /**

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.cassandra.repository.CassandraRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,6 +23,8 @@ public interface RecordRepository extends CassandraRepository<Record, RecordPrim
     Optional<Record> findByKeyId(UUID id);
 
     List<Record> findByKeyDcuId(Long dcuId);
+
+    Slice<Record> findByKeyDcuId(Long dcuId, Pageable pageRequest);
 
     Optional<Record> findByKeyIdAndKeyDcuId(UUID id, Long dcuId);
 
