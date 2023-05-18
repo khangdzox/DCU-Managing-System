@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col, Card } from 'reactstrap';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, NavLink as RouterNavLink } from 'react-router-dom';
+import { Button, Row, Col, Card, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import { Translate, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,9 +9,18 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from 'app/entities/dcu/dcu.reducer';
 import { ManagerDcuRealtime } from './manager-dcu-realtime';
+import ManagerDcuHistory from './manager-dcu-history';
 
 export const ManagerDcuDetail = () => {
   const dispatch = useAppDispatch();
+
+  // State for current active Tab
+  const [currentActiveTab, setCurrentActiveTab] = useState('1');
+
+  // Toggle active state for Tab
+  const toggle = tab => {
+    if (currentActiveTab !== tab) setCurrentActiveTab(tab);
+  };
 
   const { did: id } = useParams<'did'>();
   const { fid: factoryId } = useParams<'fid'>();
@@ -75,7 +84,26 @@ export const ManagerDcuDetail = () => {
         </Row>
       </Card>
       <Card>
-        <ManagerDcuRealtime />
+        <Nav fill tabs>
+          <NavItem>
+            <NavLink active={currentActiveTab === '1'} onClick={() => toggle('1')}>
+              Realtime
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink active={currentActiveTab === '2'} onClick={() => toggle('2')}>
+              History
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={currentActiveTab}>
+          <TabPane tabId="1">
+            <ManagerDcuRealtime />
+          </TabPane>
+          <TabPane tabId="2">
+            <ManagerDcuHistory />
+          </TabPane>
+        </TabContent>
       </Card>
     </>
   );

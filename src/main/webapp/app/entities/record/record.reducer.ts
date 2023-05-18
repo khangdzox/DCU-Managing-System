@@ -23,6 +23,15 @@ export const getEntities = createAsyncThunk('record/fetch_entity_list', async ({
   return axios.get<IRecord[]>(requestUrl);
 });
 
+interface IQueryWithLimitParams {
+  id: string | number;
+  limit?: number;
+}
+export const getEntitiesInParent = createAsyncThunk('factory/fetch_entity_list_in_parent', async ({ id, limit }: IQueryWithLimitParams) => {
+  const requestUrl = `api/dcus/${id}/records` + (limit ? `?limit=${limit}` : '');
+  return axios.get<IRecord[]>(requestUrl);
+});
+
 export const getEntity = createAsyncThunk(
   'record/fetch_entity',
   async (id: string | number) => {
@@ -89,7 +98,7 @@ export const RecordSlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = {};
       })
-      .addMatcher(isFulfilled(getEntities), (state, action) => {
+      .addMatcher(isFulfilled(getEntities, getEntitiesInParent), (state, action) => {
         const { data } = action.payload;
 
         return {
